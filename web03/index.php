@@ -17,7 +17,7 @@
     </div>
     <div id="top2">
       <a href="index.php">首頁</a>
-      <a href="order.php">線上訂票</a>
+      <a href="?do=order">線上訂票</a>
       <a href="#">會員系統</a>
       <a href="backend.php">管理系統</a>
     </div>
@@ -27,28 +27,23 @@
       </marquee>
     </div>
     <div id="mm">
-      <div class="half" style="vertical-align:top;">
-        <h1>預告片介紹</h1>
-        <div class="rb tab" style="width:95%;">
-          <div id="abgne-block-20111227">
-            <ul class="lists">
-            </ul>
-            <ul class="controls">
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="half">
-        <h1>院線片清單</h1>
-        <div class="rb tab" style="width:95%;">
-          <table>
-            <tbody>
-              <tr> </tr>
-            </tbody>
-          </table>
-          <div class="ct"> </div>
-        </div>
-      </div>
+
+
+      <!-- 主要內容區切版 -->
+      <?php
+      // (??) 這個語法糖。如果變量存在且值不為 NULL， 它就會返回自身的值，否則返回它的第二個操作
+      $do = $_GET['do'] ?? 'home';
+      $file = 'frontend/' . $do . '.php';
+      if (file_exists($file)) {
+        include $file;
+      } else {
+        include 'frontend/home.php';
+      }
+      ?>
+
+
+
+
     </div>
     <div id="bo"> ©Copyright 2010~2014 ABC影城 版權所有 </div>
   </div>

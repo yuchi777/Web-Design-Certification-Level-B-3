@@ -1,4 +1,6 @@
 <?php
+include 'base.php';
+
 if(!empty($_POST)){
   if($_POST['acc']=='admin' && $_POST['pw']=='1234'){
     $_SESSION['login']=1;
@@ -19,6 +21,11 @@ if(!empty($_POST)){
   <link rel="stylesheet" href="css/css.css">
   <link href="css/s2.css" rel="stylesheet" type="text/css">
   <script src="js/jquery-1.9.1.min.js"></script>
+  <style>
+    .tab{
+      width:98%
+    }
+  </style>
 </head>
 
 <body>
@@ -50,9 +57,21 @@ if(!empty($_POST)){
           <a href="?do=movie">院線片管理</a>|
           <a href="?do=order">電影訂票管理</a>
         </div>
-        <div class="rb tab">
+
+        <!-- 主要內容區切版 -->
+        <?php
+        // (??) 這個語法糖。如果變量存在且值不為 NULL， 它就會返回自身的值，否則返回它的第二個操作
+        $do = $_GET['do'] ?? 'home';
+        $file = 'backend/'.$do.'.php';
+        if(file_exists($file)){
+          include $file;
+        }else{
+          include 'backend/home.php';
+        }
+        ?>
+        <!-- <div class="rb tab">
           <h2 class="ct">請選擇所需功能</h2>
-        </div>
+        </div> -->
       <?php
       }else{
       ?>
