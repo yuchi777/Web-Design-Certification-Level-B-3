@@ -170,9 +170,21 @@ class DB{
 
 
     /******************************************************************************************/
-    // 第二題的SUM function //欄位加總的計算
+    // 第二題的sum function //欄位加總的計算
     public function sum($col){
         $sql="select sum(`$col`) from $this->table";
+        //抓取一個值fetchColumn
+        return $this->pdo->query($sql)->fetchColumn();
+    }
+    // 第三題的max function //欄位最大值的計算
+    // public function max($col){
+    //     $sql="select max(`$col`) from $this->table";
+    //     //抓取一個值fetchColumn
+    //     return $this->pdo->query($sql)->fetchColumn();
+    // }
+    // 第三題的math function //欄位最大值的計算
+    public function math($math,$col){
+        $sql="select $math(`$col`) from $this->table";
         //抓取一個值fetchColumn
         return $this->pdo->query($sql)->fetchColumn();
     }
@@ -190,8 +202,7 @@ class DB{
 
 
     // 建立物件導向(資料表)///////////////////////////////////////////////
-    // $Total = new DB("total");
-
+    $Trailer = new DB("trailer");
 
 
 
