@@ -53,15 +53,33 @@
             <div class="trailer-body">
                 <?php
                 $trailers = $Trailer->all('order by rank');
-                foreach ($trailers as $trailer) {
+                foreach ($trailers as $key => $trailer) {
+                    if($key > 0 && $key < (count($trailers)-1)){
+                        $up=$trailer['id']."-".$trailers[$key-1]['id'];
+                        $down=$trailer['id']."-".$trailers[$key+1]['id'];
+                    }
+
+                    if($key==0){
+                        $up=$trailer['id']."-".$trailer['id'];
+                        $down=$trailer['id']."-".$trailers[$key+1]['id'];
+                    }
+
+                    if($key==(count($trailers)-1)){
+                        $up=$trailer['id']."-".$trailers[$key-1]['id'];
+                        $down=$trailer['id']."-".$trailer['id'];
+                    }
+
+
+
+
                 ?>
                     <div class="row">
                         <div><img src="img/<?= $trailer['img'] ?>" style="width: 60px;height: 80px;"></div>
                         <div><input type="text" name="name[]" value="<?= $trailer['name'] ?>"></div>
                         <div>
-                            <input type="button" value="往上">
-                            <input type="button" value="往下">
-                            <?= $trailer['rank'] ?>
+                            <input type="button" id="<?=$up;?>" value="往上" class="sw">
+                            <input type="button" id="<?=$down;?>" value="往下" class="sw">
+                            
                         </div>
                         <div>
                             <input type="checkbox" name="sh[]" value="<?= $trailer['id'] ?>" <?= ($trailer['sh'] == 1) ? 'checked' : ''; ?>>顯示
@@ -107,3 +125,13 @@
 
     </div>
 </div>
+
+<script>
+    $(".sw").on("click",function(){
+        let id=$(this).attr('id').split("-")
+        console.log(id);
+        $.post('api/sw.php',{id},()=>{
+            location.reload();
+        })
+    })
+</script>
