@@ -1,37 +1,38 @@
 <style>
-    .trailer-header, .trailer-add{
+    .trailer-header,
+    .trailer-add {
         display: flex;
         justify-content: space-between;
     }
 
-    .trailer-header .items{
+    .trailer-header .items {
         width: 24%;
         background: #bbb;
         text-align: center;
-        margin: 5px 0 ;
+        margin: 5px 0;
     }
 
-    .trailer-body{
+    .trailer-body {
         height: 220px;
         /* padding: 5px; */
         overflow: auto;
     }
 
-    .trailer-body .row{
+    .trailer-body .row {
         display: flex;
         justify-content: space-between;
         align-items: center;
         text-align: center;
         margin: 3px 0;
         background: white;
-        padding: 3px 0 ;
+        padding: 3px 0;
     }
 
-    .row>div{
-        width: 24% ;
+    .row>div {
+        width: 24%;
     }
 
-    .trailer-add > div{
+    .trailer-add>div {
         width: 48%;
         margin-top: 10px;
     }
@@ -46,37 +47,43 @@
             <div class="items">預告片排序</div>
             <div class="items">操作</div>
         </div>
-        <div class="trailer-body">
-        <?php
-            $trailers = $Trailer->all(['sh'=>1], 'order by rank');
-            foreach($trailers as $trailer){        
-        ?>
-            <div class="row">
-                <div><img src="img/<?=$trailer['img']?>" style="width: 60px;height: 80px;"></div>
-                <div><input type="text" name="name[]" value="<?=$trailer['name']?>"></div>
-                <div>
-                    <input type="button" value="往上">
-                    <input type="button" value="往下">
-                    <?=$trailer['rank']?>
-                </div>
-                <div>
-                    <input type="checkbox" name="sh[]" value="<?=$trailer['id']?>" <?=($trailer['sh']==1)?'checked':'';?>>顯示
-                    <input type="checkbox" name="del[]" value="<?=$trailer['id']?>">刪除
-                    <select name="ani[]" id="">
-                        <option value="1" <?=($trailer['ani']==1)?'selected':'';?>>淡入淡出</option>
-                        <option value="2" <?=($trailer['ani']==2)?'selected':'';?>>縮放</option>
-                        <option value="3" <?=($trailer['ani']==3)?'selected':'';?>>滑入滑出</option>
-                    </select>
-                </div>
+
+
+        <form action="api/edit_trailer.php" method="post">
+            <div class="trailer-body">
+                <?php
+                $trailers = $Trailer->all('order by rank');
+                foreach ($trailers as $trailer) {
+                ?>
+                    <div class="row">
+                        <div><img src="img/<?= $trailer['img'] ?>" style="width: 60px;height: 80px;"></div>
+                        <div><input type="text" name="name[]" value="<?= $trailer['name'] ?>"></div>
+                        <div>
+                            <input type="button" value="往上">
+                            <input type="button" value="往下">
+                            <?= $trailer['rank'] ?>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="sh[]" value="<?= $trailer['id'] ?>" <?= ($trailer['sh'] == 1) ? 'checked' : ''; ?>>顯示
+                            <input type="checkbox" name="del[]" value="<?= $trailer['id'] ?>">刪除
+                            <select name="ani[]">
+                                <option value="1" <?= ($trailer['ani'] == 1) ? 'selected' : ''; ?>>淡入淡出</option>
+                                <option value="2" <?= ($trailer['ani'] == 2) ? 'selected' : ''; ?>>縮放</option>
+                                <option value="3" <?= ($trailer['ani'] == 3) ? 'selected' : ''; ?>>滑入滑出</option>
+                            </select>
+                            <input type="hidden" name="id[]" value="<?= $trailer['id'] ;?>">
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
-        <?php
-        }
-        ?>
-        </div>
-        <div class="ct trailer-btn" style="margin-top:2px;">
-            <input type="submit" value="編輯確定">
-            <input type="reset" value="重置">
-        </div>
+            <div class="ct trailer-btn" style="margin-top:2px;">
+                <input type="submit" value="編輯確定">
+                <input type="reset" value="重置">
+            </div>
+
+        </form>
 
 
     </div>
